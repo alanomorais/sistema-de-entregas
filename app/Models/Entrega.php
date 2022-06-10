@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models;
-
-use App\Db\Connect;
+namespace App\Model;
 use PDOException;
+use App\Db\Connect;
 
 class Entrega extends Connect
 {
@@ -19,9 +18,9 @@ class Entrega extends Connect
     {
         $sql = "SELECT * FROM {$this->table}";
         $query = $this->connection->query($sql);
-        $this->execute($query,array_values($query));
+        $resultQuery = $query->fatchAll($query);
 
-        return $this->connection->lastInsertId();
+        return $resultQuery;
     }
 
     public function execute($query, $params = [])
@@ -36,7 +35,3 @@ class Entrega extends Connect
         }
     }
 }
-
-$model = new Entrega();
-
-return $model->getAll();

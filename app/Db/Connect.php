@@ -20,14 +20,12 @@ class Connect
         $this->connectDatabase();
     }
 
-    function connectDatabase()
+    private function connectDatabase()
     {
         try {
             //$this->connection = new PDO('pgsql:host=' . self::HOST . ';port=' . self::PORT . ';dbname=' . self::NAME, self::USER, self::PASS);
             $this->connection = new PDO('mysql:host='.self::DB_HOST.';dbname='.self::DB_NAME,self::DB_USER,self::DB_PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            return $this->connection;
 
         } catch (PDOException $e) {
 
