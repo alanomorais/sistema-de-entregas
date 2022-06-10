@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Entrega;
+use App\Model\Entrega;
 
 class EntregaController
 {

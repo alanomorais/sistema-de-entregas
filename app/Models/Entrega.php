@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Model;
-use PDOException;
-use App\Db\Connect;
 
-class Entrega extends Connect
+use PDOException;
+use App\Db\Database;
+
+class Entrega extends Database
 {
     private $table;
 

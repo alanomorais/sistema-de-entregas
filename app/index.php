@@ -1,8 +1,6 @@
 <?php
-namespace App;
-use App\Controllers\EntregaController;
 
-require __DIR__.'./Controllers/EntregaController.php';
+use App\Controllers\EntregaController;
 
 $entregas = new EntregaController();
 

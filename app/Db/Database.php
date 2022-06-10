@@ -5,7 +5,7 @@ namespace App\Db;
 use PDO;
 use PDOException;
 
-class Connect
+class Database
 {
     const DB_HOST = 'localhost';
     const DB_PORT = '5432';
@@ -23,8 +23,8 @@ class Connect
     private function connectDatabase()
     {
         try {
-            //$this->connection = new PDO('pgsql:host=' . self::HOST . ';port=' . self::PORT . ';dbname=' . self::NAME, self::USER, self::PASS);
-            $this->connection = new PDO('mysql:host='.self::DB_HOST.';dbname='.self::DB_NAME,self::DB_USER,self::DB_PASS);
+            $this->connection = new PDO('pgsql:host=' . self::DB_HOST . ';port=' . self::DB_PORT . ';dbname=' . self::DB_NAME, self::DB_USER, self::DB_PASS);
+            //$this->connection = new PDO('mysql:host='.self::DB_HOST.';dbname='.self::DB_NAME,self::DB_USER,self::DB_PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         } catch (PDOException $e) {
