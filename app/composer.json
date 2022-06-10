@@ -2,7 +2,8 @@
     "vendor-name": "Sistema de Entrega",
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "src/",
+            "Db\\": "db/"
         }
     }
 }
