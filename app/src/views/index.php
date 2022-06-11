@@ -64,14 +64,17 @@ if (isset($_GET['message'])) {
                                 <td><?= $entrega['status'] == 0 ? '<span class="badge bg-danger">Pendente</span>' : '<span class="badge bg-success">Entregue</span>' ?></td>
                                 <td>
                                     <ul class="list-inline">
-                                        <li class="list-inline-item"> <a href="/?page=edit&id=<?= $entrega['id'] ?>"><button type="button" class="btn btn-link"><span class="material-icons">
-                                                edit
-                                            </span></button <?php if( $entrega['status'] == 1) "disabled"?>></a>
-                                        </li>
-                                        <li class="list-inline-item"><button type="button" class="btn btn-link"><span class="material-icons">
-                                                restore_from_trash
-                                            </span></button>
-                                        </li>
+                                        <?php if ($entrega['status'] == 0) { ?>
+                                            <li class="list-inline-item"> <a href="/?page=edit&id=<?= $entrega['id'] ?>"><button type="button" class="btn btn-link"><span class="material-icons">
+                                                            edit
+                                                        </span></button></a>
+                                            </li>
+
+                                            <li class="list-inline-item"> <a href="/?page=destroy&id=<?= $entrega['id'] ?>"><button type="button" class="btn btn-link"><span class="material-icons">
+                                                            restore_from_trash
+                                                        </span></button></a>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </td>
                             </tr>

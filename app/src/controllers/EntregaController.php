@@ -65,8 +65,41 @@ class EntregaController
         require_once('src/views/editar.php');
 
         return $response;
+    }
 
+    public function update(){
 
+        $entrega = new Entrega();
+        $id     = $_POST['id'];
+        $titulo     = $_POST['titulo'];
+        $descricao  = $_POST['descricao'];
+        $previsao   = $_POST['previsao_entrega'];
+
+        $entrega->setId($id);
+        $entrega->setTitulo($titulo);
+        $entrega->setDescricao($descricao);
+        $entrega->setPrevisao($previsao);
+
+        if($_POST['data_entrega']) $entrega->setEntrega($_POST['data_entrega']);
         
+        if($_POST['status'] == 1) $entrega->setStatus($_POST['status']);
+
+        $entrega->update();
+
+        $this->index();
+            
+    }
+
+    public function destroy(){
+
+        $entrega = new Entrega();
+        $id = $_GET['id'];
+       
+        $entrega->setId($id);
+       
+        $entrega->delete();
+
+        $this->index();
+            
     }
 }

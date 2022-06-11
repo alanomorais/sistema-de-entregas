@@ -39,7 +39,7 @@ $http_host =  $_SERVER['HTTP_HOST'];
                         <input type="checkbox" class="form-check-input" id="continuar" name="continuar">
                         <label class="form-check-label" for="continuar">Continuar Incluindo?</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Incluir</button>
+                    <button type="submit" class="btn btn-primary" name="button" value="insert">Incluir</button>
                 </form>
             </div>
         </div>

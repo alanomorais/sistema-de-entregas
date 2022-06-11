@@ -71,7 +71,7 @@ class Entrega extends Database
         return $this->data_entrega;
     }
 
-    public function setEntrega($entrega)
+    public function setEntrega($entrega = null)
     {
         $this->data_entrega = $entrega;
 
@@ -83,7 +83,7 @@ class Entrega extends Database
         return $this->status;
     }
 
-    public function setStatus($status)
+    public function setStatus($status = 0)
     {
         $this->status = $status;
 
@@ -106,6 +106,24 @@ class Entrega extends Database
         return $resultQuery;
     }
 
+    public function show()
+    {
+        try {
+            $sql = "SELECT * FROM {$this->table} where id = {$this->id}";
+            $query = $this->connection->query($sql);
+            $resultQuery = $query->fetchAll();
+    
+            return $resultQuery;
+
+        } catch (PDOException $e) {
+            $response = [
+                'success' => false,
+                'message' => "erro ao inserir a entrega!",
+                'mesg_error' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function insert()
     {
         try {
@@ -115,7 +133,6 @@ class Entrega extends Database
             $statatement->bindParam(':titulo', $this->titulo);
             $statatement->bindParam(':descricao', $this->descricao);
             $statatement->bindParam(':previsao_entrega', $this->previsao_entrega);
-
             $statatement->execute();
 
             $response = [
@@ -137,21 +154,64 @@ class Entrega extends Database
         }
     }
 
-    public function show()
+    public function update()
     {
         try {
-            $sql = "SELECT * FROM {$this->table} where id = {$this->id}";
-            $query = $this->connection->query($sql);
-            $resultQuery = $query->fetchAll();
-    
-            return $resultQuery;
+            $sql = "UPDATE {$this->table} SET titulo = :titulo ,descricao = :descricao, previsao_entrega = :previsao_entrega, data_entrega = :data_entrega , status = :status WHERE id = :id";
 
+            $statatement = $this->connection->prepare($sql);
+            $statatement->bindParam(':id', $this->id);
+            $statatement->bindParam(':titulo', $this->titulo);
+            $statatement->bindParam(':descricao', $this->descricao);
+            $statatement->bindParam(':previsao_entrega', $this->previsao_entrega);
+            $statatement->bindParam(':data_entrega', $this->data_entrega);
+            $statatement->bindParam(':status', $this->status);
+            $statatement->execute();
+
+            $response = [
+                'success' => true,
+                'message' => "entrega atualizada com sucesso",
+            ];
+
+            return $response;
         } catch (PDOException $e) {
+
             $response = [
                 'success' => false,
                 'message' => "erro ao inserir a entrega!",
                 'mesg_error' => $e->getMessage(),
             ];
+
+            return $response;
         }
     }
+
+    public function delete()
+    {
+        try {
+            $sql = "delete from  {$this->table} WHERE id = :id";
+
+            $statatement = $this->connection->prepare($sql);
+            $statatement->bindParam(':id', $this->id);
+            $statatement->execute();
+
+            $response = [
+                'success' => true,
+                'message' => "entrega atualizada com sucesso",
+            ];
+
+            return $response;
+        } catch (PDOException $e) {
+
+            $response = [
+                'success' => false,
+                'message' => "erro ao inserir a entrega!",
+                'mesg_error' => $e->getMessage(),
+            ];
+
+            return $response;
+        }
+    }
+
+   
 }
