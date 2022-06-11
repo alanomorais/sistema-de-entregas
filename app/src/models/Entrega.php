@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use PDO;
 use PDOException;
 use Db\Database;
 
@@ -13,7 +14,7 @@ class Entrega extends Database
     private $id;
     private $titulo;
     private $descricao;
-    private $data_previsao;
+    private $previsao_entrega;
     private $data_entrega;
     private $status;
 
@@ -29,14 +30,14 @@ class Entrega extends Database
         return $this;
     }
 
-    public function geTitulo()
+    public function getTitulo()
     {
         return $this->titulo;
     }
 
     public function setTitulo($titulo)
     {
-        $this->id = $titulo;
+        $this->titulo = $titulo;
 
         return $this;
     }
@@ -48,19 +49,19 @@ class Entrega extends Database
 
     public function setDescricao($descricao)
     {
-        $this->id = $descricao;
+        $this->descricao = $descricao;
 
         return $this;
     }
 
     public function getPrevisao()
     {
-        return $this->data_previsao;
+        return $this->previsao_entrega;
     }
 
     public function setPrevisao($previsao)
     {
-        $this->id = $previsao;
+        $this->previsao_entrega = $previsao;
 
         return $this;
     }
@@ -72,7 +73,7 @@ class Entrega extends Database
 
     public function setEntrega($entrega)
     {
-        $this->id = $entrega;
+        $this->data_entrega = $entrega;
 
         return $this;
     }
@@ -84,7 +85,7 @@ class Entrega extends Database
 
     public function setStatus($status)
     {
-        $this->id = $status;
+        $this->status = $status;
 
         return $this;
     }
@@ -107,20 +108,19 @@ class Entrega extends Database
 
     public function insert()
     {
-        $sql = "INSERT INTO {$this->table} ('titulo','descricao', 'previsao_entrega', 'data_entrega', 'status') VALUES (':titulo',':descricao', ':previsao_entrega', ':data_entrega', ':status')";
-        //$this->titulo,$this->descricao,$this->data_previsao,$this->data_entrega, $this->status
+        
+        $sql = "INSERT INTO {$this->table} (titulo,descricao,previsao_entrega) VALUES (:titulo,:descricao,:previsao_entrega)";
+        //$this->titulo,$this->descricao,$this->previsao_entrega,$this->data_entrega, $this->status
         $statatement = $this->connection->prepare($sql);
-        $statatement->bindParam(':titulo', $this->titulo);
-        $statatement->bindParam(':descricao', $this->descricao);
-        $statatement->bindParam(':data_previsao', $this->data_previsao);
-        $statatement->bindParam(':data_entrega', $this->data_entrega);
-        $statatement->bindParam(':status', $this->status);
+        $statatement->bindParam(':titulo',$this->titulo);
+        $statatement->bindParam(':descricao',$this->descricao);
+        $statatement->bindParam(':previsao_entrega',$this->previsao_entrega);
         $statatement->execute();
 
         return $this->connection->lastInsertId();
     }
 
-    public function execute($query, $params = [])
+    public function execute1($query, $params = [])
     {
         try {
             $statatement = $this->connection->prepare($query);
