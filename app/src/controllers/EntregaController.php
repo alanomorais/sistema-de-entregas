@@ -37,13 +37,36 @@ class EntregaController
             try {
                 $entrega->insert();
 
-                $mensagem = 'dados inseridos com sucesso';
-                header("Location: {$_SERVER['HTTP_HOST']}?msg=$mensagem");
+                $msg = 'dados inseridos com sucesso';
+                $response = [
+                    'success' => true,
+                    'message' => $msg
+                ];
+
+                $this->index();
+
             } catch (Exception $e) {
-                return "ERROR: ".$e->getMessage();
+                return "ERROR: " . $e->getMessage();
             }
         } else {
             echo "não pode ter campo vazio";
         }
+    }
+
+    public function edit(){
+        
+        $id = $_GET['id'];
+
+        $entrega = new Entrega();
+        $entrega->setId($id);
+        
+        $response = $entrega->show();
+
+        require_once('src/views/editar.php');
+
+        return $response;
+
+
+        
     }
 }

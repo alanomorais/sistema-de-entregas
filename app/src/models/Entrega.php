@@ -108,27 +108,50 @@ class Entrega extends Database
 
     public function insert()
     {
-        
-        $sql = "INSERT INTO {$this->table} (titulo,descricao,previsao_entrega) VALUES (:titulo,:descricao,:previsao_entrega)";
-        //$this->titulo,$this->descricao,$this->previsao_entrega,$this->data_entrega, $this->status
-        $statatement = $this->connection->prepare($sql);
-        $statatement->bindParam(':titulo',$this->titulo);
-        $statatement->bindParam(':descricao',$this->descricao);
-        $statatement->bindParam(':previsao_entrega',$this->previsao_entrega);
-        $statatement->execute();
+        try {
+            $sql = "INSERT INTO {$this->table} (titulo,descricao,previsao_entrega) VALUES (:titulo,:descricao,:previsao_entrega)";
 
-        return $this->connection->lastInsertId();
+            $statatement = $this->connection->prepare($sql);
+            $statatement->bindParam(':titulo', $this->titulo);
+            $statatement->bindParam(':descricao', $this->descricao);
+            $statatement->bindParam(':previsao_entrega', $this->previsao_entrega);
+
+            $statatement->execute();
+
+            $response = [
+                'success' => true,
+                'message' => "entrega inserida com sucesso",
+                'id' => $this->connection->lastInsertId()
+            ];
+
+            return $response;
+        } catch (PDOException $e) {
+
+            $response = [
+                'success' => false,
+                'message' => "erro ao inserir a entrega!",
+                'mesg_error' => $e->getMessage(),
+            ];
+
+            return $response;
+        }
     }
 
-    public function execute1($query, $params = [])
+    public function show()
     {
         try {
-            $statatement = $this->connection->prepare($query);
-            $statatement->execute($params);
+            $sql = "SELECT * FROM {$this->table} where id = {$this->id}";
+            $query = $this->connection->query($sql);
+            $resultQuery = $query->fetchAll();
+    
+            return $resultQuery;
 
-            return $this->connection->lastInsertId();
         } catch (PDOException $e) {
-            die('ERROR: ' . $e->getMessage());
+            $response = [
+                'success' => false,
+                'message' => "erro ao inserir a entrega!",
+                'mesg_error' => $e->getMessage(),
+            ];
         }
     }
 }

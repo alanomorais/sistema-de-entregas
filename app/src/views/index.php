@@ -16,6 +16,23 @@ if (isset($_GET['message'])) {
 
 ?>
 <main class="flex-shrink-0">
+    <?php
+    if (isset($response)) {
+        if ($respons['success']) {
+    ?>
+            <div class="alert alert-primary" role="alert">
+                Entrega inserida com sucesso!
+            </div>
+        <?php
+        } else {
+        ?>
+            <div class="alert alert-danger" role="alert">
+                Erro ao inserir entrega!
+            </div>
+    <?php
+        }
+    }
+    ?>
     <div class="container">
         <h1 class="mt-5">Listagem de Entregas</h1>
         <p class="lead">Cliente no Botão novo para Adicionar uma nova entrega</p>
@@ -37,28 +54,28 @@ if (isset($_GET['message'])) {
                         <?php
                         foreach ($entregas as $key => $entrega) {
                             # code...
-                        
+
                         ?>
-                        <tr>
-                            <th scope="row"><?= $entrega['id'] ?></th>
-                            <td><?= $entrega['titulo'] ?></td>
-                            <td><?= $entrega['descricao'] ?></td>
-                            <td><?= date('d/m/Y', strtotime("{$entrega['previsao_entrega']}")); ?></td>
-                            <td><?=  $entrega['status'] == 0 ? '<span class="badge bg-danger">Pendente</span>' : '<span class="badge bg-success">Entregue</span>' ?></td>
-                            <td>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item" <button type="button" class="btn btn-link"><span class="material-icons">
-                                            edit
-                                        </span></button>
-                                    </li>
-                                    <li class="list-inline-item" <button type="button" class="btn btn-link"><span class="material-icons">
-                                            restore_from_trash
-                                        </span></button>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <?php } ?>                        
+                            <tr>
+                                <th scope="row"><?= $entrega['id'] ?></th>
+                                <td><?= $entrega['titulo'] ?></td>
+                                <td><?= $entrega['descricao'] ?></td>
+                                <td><?= date('d/m/Y', strtotime("{$entrega['previsao_entrega']}")); ?></td>
+                                <td><?= $entrega['status'] == 0 ? '<span class="badge bg-danger">Pendente</span>' : '<span class="badge bg-success">Entregue</span>' ?></td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item"> <a href="/?page=edit&id=<?= $entrega['id'] ?>"><button type="button" class="btn btn-link"><span class="material-icons">
+                                                edit
+                                            </span></button <?php if( $entrega['status'] == 1) "disabled"?>></a>
+                                        </li>
+                                        <li class="list-inline-item"><button type="button" class="btn btn-link"><span class="material-icons">
+                                                restore_from_trash
+                                            </span></button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
