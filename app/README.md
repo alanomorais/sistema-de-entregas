@@ -1,9 +1,12 @@
 #SISTEMA DE ENTREGA
 
 ## Sistema desenvolvido em PHP 8 usando o padrão MVC com banco de dados PostgreSQL 14.3.1
+
 ###  Criação da Estrutura do Banco de dados:
 1) rodar o scritp abaixo:
-1.1) Criação do banco de dados
+1.1) composer install na pasta app do projeto
+
+1.2) Criação do banco de dados
 
 /*********************************************************/
 -- Database: entrega
@@ -19,7 +22,7 @@ CREATE DATABASE entrega
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 /*********************************************************/
-1.2) Criação da Tabela tb_entrega
+1.3) Criação da Tabela tb_entrega
 
 CREATE TABLE tb_entrega (
   id serial PRIMARY KEY,
@@ -29,7 +32,7 @@ CREATE TABLE tb_entrega (
   data_entrega timestamp  DEFAULT NULL,
   status char(1)  NOT NULL DEFAULT '0'  
 )
-1.3) Caso queira popular o banco de dados
+1.4) Caso queira popular o banco de dados
 
 INSERT INTO tb_entrega (id, titulo, descricao, previsao_entrega, data_entrega, status) VALUES
   (1, 'Entrega de Mercadoria', 'Entrega de encomenda para JoÃ£o Igor', '2022-06-08 00:00:00', NULL, '0'),
@@ -37,4 +40,11 @@ INSERT INTO tb_entrega (id, titulo, descricao, previsao_entrega, data_entrega, s
   (3, 'Entrega de Mercadoria', 'teste', '2022-06-08 00:00:00', NULL, '0');
 
 
+
 ### As configurações do banco de dados estão definidas na Class Connection (App\Db\Connect)
+
+### 
+1) Sistema possui um Menu que chama a página Principal, onde são listadas todas as entregas pendente.
+3) Acima da listagem possui o botão "novo" para incluir uma nova entrega.
+4) Na listagem existem 2 botões de acões: Editar e Excluir. Estas acções só ficarão habilitadas para entregas pendentes.
+

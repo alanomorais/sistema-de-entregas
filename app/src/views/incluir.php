@@ -35,10 +35,6 @@ $http_host =  $_SERVER['HTTP_HOST'];
                             <label for="status" class="form-check-label">Concluída</label>
                         </div>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="continuar" name="continuar">
-                        <label class="form-check-label" for="continuar">Continuar Incluindo?</label>
-                    </div>
                     <button type="submit" class="btn btn-primary" name="button" value="insert">Incluir</button>
                 </form>
             </div>
